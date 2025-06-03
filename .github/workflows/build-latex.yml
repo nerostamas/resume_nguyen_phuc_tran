@@ -23,30 +23,46 @@ jobs:
         root_file: resume.tex
         latexmk_use_xelatex: true
 
+    - name: Install poppler-utils
+      run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
+    - name: Generate Preview Image
+      run: pdftoppm -png -f 1 -l 1 -scale-to-x 1200 -scale-to-y -1 resume.pdf resume_preview
+
     - name: Rename PDF
-      run: mv resume.pdf resume_NguyenPhucTran.pdf
+      run: |
+        mv resume.pdf resume_NguyenPhucTran.pdf
+        mv resume_preview-1.png resume_preview.png
         
-    - name: Upload PDF
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Resume
-        path: resume_NguyenPhucTran.pdf
+        name: ResumeFiles
+        path: |
+          resume_NguyenPhucTran.pdf
+          resume_preview.png
 
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: resume_NguyenPhucTran.pdf
+        files: |
+          resume_NguyenPhucTran.pdf
+          resume_preview.png
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
-    - name: Update README
+    - name: Update README and Commit Files
       if: github.ref == 'refs/heads/main'
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add README.md resume_NguyenPhucTran.pdf
-        git commit -m "Update resume preview" || echo "No changes to commit"
+        # Ensure README.md uses resume_preview.png
+        # This sed command is an example; adjust if your README structure is different
+        # It replaces '![Latest Resume](resume_NguyenPhucTran.pdf)' with '![Latest Resume Preview](resume_preview.png)'
+        sed -i 's|!\[Latest Resume\](resume_NguyenPhucTran.pdf)|![Latest Resume Preview](resume_preview.png)|g' README.md
+        git add README.md resume_NguyenPhucTran.pdf resume_preview.png
+        git commit -m "Update resume PDF and preview image" || echo "No changes to commit"
         git push "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}

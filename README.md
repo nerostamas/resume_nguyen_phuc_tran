@@ -6,7 +6,7 @@ This repository contains my professional resume written in LaTeX.
 
 You can view my latest resume below:
 
-![Latest Resume](resume_NguyenPhucTran.pdf)
+![Latest Resume Preview](resume_preview.png)
 
 ## Download
 
@@ -14,7 +14,7 @@ You can view my latest resume below:
 
 ## Build Status
 
-![Build LaTeX Resume](https://github.com/nerostamas/resume/actions/workflows/build-latex.yml/badge.svg)
+![Build LaTeX Resume](https://github.com/nerostamas/resume_nguyen_phuc_tran/actions/workflows/build-latex.yml/badge.svg)
 
 ## Building Locally
 
@@ -26,4 +26,4 @@ xelatex resume.tex
 
 ## Contact
 
-Feel free to reach out to me on [LinkedIn](https://linkedin.com/in/phuc-tran-mtl) or via email.
+Feel free to reach out to me on [personal page](https://nerostamas.github.io/), [LinkedIn](https://linkedin.com/in/phuc-tran-mtl) or via email.
