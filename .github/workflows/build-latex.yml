@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+    contents: write
+    pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,8 +43,10 @@ jobs:
     - name: Update README
       if: github.ref == 'refs/heads/main'
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git add README.md resume_NguyenPhucTran.pdf
         git commit -m "Update resume preview" || echo "No changes to commit"
-        git push
+        git push "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
