@@ -105,7 +105,7 @@
 
 \newenvironment{rSchool}[5]{ % 5 input arguments - University, year(s) studied, discipline, GPA and awards
   {\bf #1} \hfill {#2}\\
-  {#3} \hfill {#4}\\
+  {#3} \hfill \\%{#4}\\
   {#5}
 }
 
