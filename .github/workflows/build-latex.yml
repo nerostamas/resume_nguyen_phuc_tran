@@ -34,7 +34,7 @@ jobs:
       with:
         files: resume_NguyenPhucTran.pdf
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Update README
       if: github.ref == 'refs/heads/main'
